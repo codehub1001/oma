@@ -9,12 +9,12 @@ export const products = [
     id: 2,
     name: "Bridal Robe",
     price: 40000,
-    image: "/img/products/bridal.jpg",
+    // image: "/img/products/bridal.jpg",
   },
   {
     id: 3,
     name: "Custom Lace",
     price: 15000,
-    image: "/img/products/lace.jpg",
+    // image: "/img/products/lace.jpg",
   },
 ];
