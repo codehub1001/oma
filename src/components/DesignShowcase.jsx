@@ -112,8 +112,6 @@ export default function DesignShowcase() {
           style={{ whiteSpace: "nowrap", WebkitOverflowScrolling: "touch" }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          // Make drag possible on touch devices:
-          // (You can add drag="x" with framer-motion for more advanced drag if needed)
         >
           <motion.div
             className="flex gap-6 sm:gap-8 px-2"
@@ -124,16 +122,31 @@ export default function DesignShowcase() {
             {[...designs, ...designs].map((design, index) => (
               <motion.div
                 key={index}
-                className="relative rounded-3xl overflow-hidden shadow-2xl bg-white min-w-[250px] sm:min-w-[280px] md:min-w-[320px] lg:min-w-[350px] flex-shrink-0 inline-block cursor-pointer"
+                className="relative rounded-3xl overflow-hidden shadow-2xl bg-white flex-shrink-0 inline-block cursor-pointer"
+                style={{
+                  minWidth: "250px",
+                  width: "clamp(250px, 30vw, 350px)",
+                }}
                 whileHover={{ scale: 1.05, zIndex: 10 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
-                <img
-                  src={design.image}
-                  alt={design.title}
-                  className="w-full h-[14rem] sm:h-64 md:h-80 object-cover"
-                  loading="lazy"
-                />
+                {/* Responsive image container with aspect ratio */}
+                <div
+                  className="w-full"
+                  style={{
+                    aspectRatio: "4 / 3",
+                    overflow: "hidden",
+                    borderTopLeftRadius: "1.5rem",
+                    borderTopRightRadius: "1.5rem",
+                  }}
+                >
+                  <img
+                    src={design.image}
+                    alt={design.title}
+                    className="w-full h-full object-cover select-none"
+                    loading="lazy"
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 sm:p-6 text-white rounded-b-3xl">
                   <h3 className="text-lg sm:text-xl font-semibold mb-1 drop-shadow-lg">
                     {design.title}
