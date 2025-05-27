@@ -11,6 +11,10 @@ import WhyChooseUs from './components/Why';
 import Footer from './components/Footer';
 
 import { LogoLoader } from './components/Loader'; // import your loader
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Gallery from './pages/Gallery';
+import Store from './pages/Store';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +49,10 @@ const App = () => {
             </>
           }
         />
+        <Route path='/about' element={<About/>}/>
+        <Route path='/contact' element={<Contact/>}/>
+        <Route path='/gallery' element={<Gallery/>}/>
+        <Route path='/store' element={<Store/>}/>
       </Routes>
 
       <Footer />

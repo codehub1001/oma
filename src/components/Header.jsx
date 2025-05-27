@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { FiMenu, FiX } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { FiMenu, FiX, FiShoppingCart } from "react-icons/fi"; // added FiShoppingCart
 
 const Header = () => {
   const [navOpen, setNavOpen] = useState(false);
 
   const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Services", href: "#services" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", to: "/" },
+    { name: "About", to: "/about" },
+    { name: "Contact", to: "/contact" },
+    { name: "Gallery", to: "/gallery" },
   ];
 
   return (
@@ -17,40 +18,47 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <img
-              src="/img/oglogo.png"
-              alt="OMA Glamour Logo"
-              className="w-10 h-auto sm:w-12"
-            />
-            <span className="text-xl sm:text-2xl font-bold font-serif tracking-wider">
-              OMA GLAMOUR
-            </span>
+            <Link to="/" onClick={() => setNavOpen(false)} className="flex items-center">
+              <img
+                src="/img/oglogo.png"
+                alt="OMA Glamour Logo"
+                className="w-10 h-auto sm:w-12"
+              />
+              <span className="text-xl sm:text-2xl font-bold font-serif tracking-wider ml-2">
+                OMA GLAMOUR
+              </span>
+            </Link>
           </div>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex space-x-8 lg:space-x-12 text-sm font-medium items-center">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
-                className="text-gray-300 hover:text-gold transition-colors duration-200"
+                to={link.to}
+                onClick={() => setNavOpen(false)}
+                className="text-gray-300 hover:text-yellow-500 transition-colors duration-200"
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
-            <a
-              href="#book"
-              className="bg-gold text-white px-4 py-2 rounded-full text-sm hover:opacity-90 transition"
+
+            {/* Store button with icon */}
+            <Link
+              to="/store"
+              onClick={() => setNavOpen(false)}
+              className="inline-flex items-center bg-yellow-500 text-black px-5 py-2 rounded-full text-sm font-semibold hover:bg-yellow-400 transition"
             >
-              Book Now
-            </a>
+              <FiShoppingCart className="mr-2" size={18} />
+              Store
+            </Link>
           </nav>
 
           {/* Mobile Menu Toggle */}
           <div className="md:hidden text-white">
             <button
               onClick={() => setNavOpen(!navOpen)}
-              className="text-gold focus:outline-none"
+              className="text-yellow-500 focus:outline-none"
               aria-label="Toggle navigation"
             >
               {navOpen ? <FiX size={24} /> : <FiMenu size={24} />}
@@ -62,20 +70,25 @@ const Header = () => {
         {navOpen && (
           <div className="md:hidden flex flex-col space-y-4 pb-4 text-gray-300 animate-slideDown">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
-                className="hover:text-gold transition-colors duration-200"
+                to={link.to}
+                onClick={() => setNavOpen(false)}
+                className="hover:text-yellow-500 transition-colors duration-200"
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
-            <a
-              href="#book"
-              className="bg-gold text-white text-center py-2 rounded-full text-sm mt-2 hover:opacity-90 transition"
+
+            {/* Mobile Store button */}
+            <Link
+              to="/store"
+              onClick={() => setNavOpen(false)}
+              className="inline-flex items-center justify-center bg-yellow-500 text-black py-2 rounded-full text-sm font-semibold mt-2 hover:bg-yellow-400 transition"
             >
-              Book Now
-            </a>
+              <FiShoppingCart className="mr-2" size={18} />
+              Store
+            </Link>
           </div>
         )}
       </div>

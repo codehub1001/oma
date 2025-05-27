@@ -67,12 +67,12 @@ export default function Footer() {
           <ul className="space-y-3 text-sm">
             <li className="flex items-center gap-2">
               <MapPin size={18} />
-              <span>123 Elegance St, Lagos, Nigeria</span>
+              <span> ikorodu, Lagos, Nigeria</span>
             </li>
             <li className="flex items-center gap-2">
               <Phone size={18} />
-              <a href="tel:+2348012345678" className="hover:text-pink-400 transition-colors duration-200">
-                +234 801 234 5678
+              <a href="tel:+2347040884968" className="hover:text-pink-400 transition-colors duration-200">
+                +234 704 088 4968
               </a>
             </li>
             <li className="flex items-center gap-2">
