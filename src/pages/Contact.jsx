@@ -89,11 +89,11 @@ export default function Contact() {
           <div className="space-y-3 text-lg text-gray-700">
             <p>
               <Mail className="inline mr-2 text-pink-600" />
-              omaglamour@example.com
+              omaglamour@gmail.com
             </p>
             <p>
               <Phone className="inline mr-2 text-pink-600" />
-              +234 901 234 5678
+              +234 704 088 4968
             </p>
           </div>
 

@@ -7,9 +7,9 @@ const mediaItems = [
   { type: "image", src: "/img/glam2.jpg", alt: "Custom dress fitting" },
   { type: "image", src: "/img/glam3.jpg", alt: "Traditional outfit" },
   { type: "video", src: "/video/og1.mp4", alt: "Runway showcase" },
-  { type: "video", src: "/media/gallery5.mp4", alt: "Behind the scenes" },
-  { type: "image", src: "/media/gallery6.jpg", alt: "Bridal train style" },
-  { type: "image", src: "/media/gallery7.jpg", alt: "Evening elegance" },
+//   { type: "video", src: "/media/gallery5.mp4", alt: "Behind the scenes" },
+//   { type: "image", src: "/media/gallery6.jpg", alt: "Bridal train style" },
+//   { type: "image", src: "/media/gallery7.jpg", alt: "Evening elegance" },
 ];
 
 export default function Gallery() {
