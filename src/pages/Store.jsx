@@ -5,7 +5,6 @@ import CartSummary from "../components/CartSummary";
 import { ShoppingCart } from "lucide-react";
 
 export default function Store() {
-  // Initialize cart from localStorage or empty array
   const [cart, setCart] = useState(() => {
     if (typeof window !== "undefined") {
       const savedCart = localStorage.getItem("cart");
@@ -15,8 +14,8 @@ export default function Store() {
   });
 
   const [showMobileCart, setShowMobileCart] = useState(false);
+  const [activeImage, setActiveImage] = useState(null);
 
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -54,7 +53,6 @@ export default function Store() {
           Shop Our Styles
         </h2>
 
-        {/* Desktop Cart Icon with Badge */}
         <div className="hidden md:block relative">
           <button
             onClick={() => setShowMobileCart(!showMobileCart)}
@@ -74,11 +72,15 @@ export default function Store() {
       <div className="grid md:grid-cols-3 gap-8">
         <div className="md:col-span-2 grid sm:grid-cols-2 gap-6">
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} onAdd={addToCart} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              onAdd={addToCart}
+              onImageClick={() => setActiveImage(product.image)}
+            />
           ))}
         </div>
 
-        {/* Desktop Cart Summary */}
         <div className="hidden md:block">
           <CartSummary
             cart={cart}
@@ -88,7 +90,6 @@ export default function Store() {
         </div>
       </div>
 
-      {/* Mobile Sticky Cart Icon */}
       <div className="md:hidden sticky bottom-4 z-50 flex justify-end pointer-events-none">
         <button
           onClick={() => setShowMobileCart(!showMobileCart)}
@@ -104,7 +105,6 @@ export default function Store() {
         </button>
       </div>
 
-      {/* Mobile Cart Slide-Up */}
       {showMobileCart && (
         <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow-2xl z-50 p-4 max-h-[70vh] overflow-y-auto animate-slideUp rounded-t-2xl">
           <CartSummary
@@ -112,6 +112,28 @@ export default function Store() {
             updateQuantity={updateQuantity}
             removeFromCart={removeFromCart}
           />
+        </div>
+      )}
+
+      {/* Fullscreen Image Modal */}
+      {activeImage && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+          onClick={() => setActiveImage(null)}
+        >
+          <div className="relative">
+            <img
+              src={activeImage}
+              alt="Product Fullscreen"
+              className="max-w-full max-h-[90vh] rounded-lg shadow-lg"
+            />
+            <button
+              onClick={() => setActiveImage(null)}
+              className="absolute top-2 right-2 bg-white text-black rounded-full p-2 shadow hover:bg-gray-100"
+            >
+              ✕
+            </button>
+          </div>
         </div>
       )}
     </section>
