@@ -23,15 +23,15 @@ const designs = [
     image: "/img/glam4.jpg",
     description: "Make your big day unforgettable.",
   },
-   {
-    title: "Wedding Glam",
+  {
+    title: "Bridal Elegance",
     image: "/img/glam5.jpg",
-    description: "Make your big day unforgettable.",
+    description: "The perfect bridal touch.",
   },
-   {
-    title: "Wedding Glam",
+  {
+    title: "Evening Shine",
     image: "/img/glam6.jpg",
-    description: "Make your big day unforgettable.",
+    description: "Sparkle through the night.",
   },
 ];
 
@@ -41,12 +41,12 @@ export default function DesignShowcase() {
   const [totalWidth, setTotalWidth] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
-  // For modal image view
+  // Modal state
   const [modalDesign, setModalDesign] = useState(null);
 
   useEffect(() => {
     if (carouselRef.current) {
-      setTotalWidth(carouselRef.current.scrollWidth / 2); // half, because items duplicated
+      setTotalWidth(carouselRef.current.scrollWidth / 2); // half because items duplicated
     }
   }, []);
 
@@ -54,7 +54,7 @@ export default function DesignShowcase() {
     if (!totalWidth || isHovered) return;
 
     let start = null;
-    const duration = totalWidth * 12; // slower duration for smoothness
+    const duration = totalWidth * 12;
     let rafId;
 
     const animate = (timestamp) => {
@@ -77,7 +77,6 @@ export default function DesignShowcase() {
     return () => cancelAnimationFrame(rafId);
   }, [totalWidth, isHovered, controls]);
 
-  // Variants for the heading animation
   const headingVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -89,15 +88,14 @@ export default function DesignShowcase() {
 
   return (
     <>
-      <section className="max-w-7xl mx-auto px-4 py-16 select-none">
+      <section className="max-w-7xl mx-auto px-4 py-12 select-none">
         <motion.h2
-          className="text-4xl md:text-5xl font-extrabold text-center mb-12 text-pink-700 tracking-wide relative inline-block"
+          className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center mb-12 text-pink-700 tracking-wide relative inline-block px-2"
           initial="hidden"
           animate="visible"
           variants={headingVariants}
         >
           Our Signature Designs
-          {/* Animated underline */}
           <motion.span
             className="absolute bottom-0 left-1/2 -translate-x-1/2 h-1 bg-pink-600 rounded-full"
             layoutId="underline"
@@ -110,13 +108,15 @@ export default function DesignShowcase() {
 
         <motion.div
           ref={carouselRef}
-          className="overflow-hidden cursor-grab rounded-2xl shadow-lg"
-          style={{ whiteSpace: "nowrap" }}
+          className="overflow-x-auto scrollbar-hide cursor-grab rounded-2xl shadow-lg"
+          style={{ whiteSpace: "nowrap", WebkitOverflowScrolling: "touch" }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          // Make drag possible on touch devices:
+          // (You can add drag="x" with framer-motion for more advanced drag if needed)
         >
           <motion.div
-            className="flex gap-8 px-2"
+            className="flex gap-6 sm:gap-8 px-2"
             animate={controls}
             drag="false"
             style={{ display: "inline-flex" }}
@@ -124,25 +124,26 @@ export default function DesignShowcase() {
             {[...designs, ...designs].map((design, index) => (
               <motion.div
                 key={index}
-                className="relative rounded-3xl overflow-hidden shadow-2xl bg-white min-w-[300px] md:min-w-[350px] flex-shrink-0 inline-block cursor-pointer"
+                className="relative rounded-3xl overflow-hidden shadow-2xl bg-white min-w-[250px] sm:min-w-[280px] md:min-w-[320px] lg:min-w-[350px] flex-shrink-0 inline-block cursor-pointer"
                 whileHover={{ scale: 1.05, zIndex: 10 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <img
                   src={design.image}
                   alt={design.title}
-                  className="w-full h-80 object-cover"
+                  className="w-full h-[14rem] sm:h-64 md:h-80 object-cover"
+                  loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-white rounded-b-3xl">
-                  <h3 className="text-2xl font-semibold mb-1 drop-shadow-lg">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 sm:p-6 text-white rounded-b-3xl">
+                  <h3 className="text-lg sm:text-xl font-semibold mb-1 drop-shadow-lg">
                     {design.title}
                   </h3>
-                  <p className="text-sm mb-3 drop-shadow-md">{design.description}</p>
+                  <p className="text-xs sm:text-sm mb-3 drop-shadow-md">{design.description}</p>
                   <button
                     onClick={() => setModalDesign(design)}
-                    className="inline-flex items-center gap-2 px-5 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-full text-sm font-semibold shadow-lg transition"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-full text-xs sm:text-sm font-semibold shadow-lg transition"
                   >
-                    View Design <Eye className="w-5 h-5" />
+                    View Design <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
                 </div>
               </motion.div>
@@ -151,25 +152,25 @@ export default function DesignShowcase() {
         </motion.div>
       </section>
 
-      {/* Modal for enlarged image */}
+      {/* Modal */}
       {modalDesign && (
         <motion.div
-          className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center z-50 p-4 sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={() => setModalDesign(null)}
         >
           <motion.div
-            className="relative max-w-4xl max-h-full rounded-lg overflow-hidden shadow-xl"
+            className="relative w-full max-w-xl sm:max-w-3xl max-h-full rounded-lg overflow-hidden shadow-xl bg-black"
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0.8 }}
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+            onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setModalDesign(null)}
-              className="absolute top-3 right-3 text-white bg-black bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 z-10"
+              className="absolute top-3 right-3 text-white bg-black bg-opacity-60 hover:bg-opacity-90 rounded-full p-2 z-10 focus:outline-none focus:ring-2 focus:ring-pink-500"
               aria-label="Close"
             >
               <X className="w-6 h-6" />
@@ -177,11 +178,12 @@ export default function DesignShowcase() {
             <img
               src={modalDesign.image}
               alt={modalDesign.title}
-              className="max-w-full max-h-[80vh] object-contain rounded-lg"
+              className="w-full max-h-[75vh] object-contain rounded-b-lg select-none"
+              loading="lazy"
             />
-            <div className="mt-4 text-center text-white">
-              <h3 className="text-3xl font-semibold mb-1">{modalDesign.title}</h3>
-              <p className="text-lg">{modalDesign.description}</p>
+            <div className="p-4 sm:p-6 text-center text-white">
+              <h3 className="text-2xl sm:text-3xl font-semibold mb-1">{modalDesign.title}</h3>
+              <p className="text-sm sm:text-base">{modalDesign.description}</p>
             </div>
           </motion.div>
         </motion.div>
