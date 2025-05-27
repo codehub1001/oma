@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Sparkles, ShoppingBag, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";  // <-- Import Link
 
 export default function Banner() {
   return (
@@ -49,17 +50,21 @@ export default function Banner() {
             pieces. Be bold. Be beautiful. Be unforgettable.
           </motion.p>
 
-          <motion.button
-            className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-6 sm:px-8 rounded-full shadow-lg flex items-center gap-3 transition duration-300"
-            onClick={() => alert("Shop now clicked!")}
+          {/* Replace button with Link */}
+          <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <ShoppingBag className="w-5 h-5" />
-            Shop Now
-            <ArrowRight className="w-5 h-5 ml-1" />
-          </motion.button>
+            <Link
+              to="/store"
+              className="inline-flex items-center gap-3 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-6 sm:px-8 rounded-full shadow-lg transition duration-300"
+            >
+              <ShoppingBag className="w-5 h-5" />
+              Shop Now
+              <ArrowRight className="w-5 h-5 ml-1" />
+            </Link>
+          </motion.div>
         </motion.div>
       </motion.div>
     </div>

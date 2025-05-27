@@ -1,12 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { products } from "../data/product";
 import ProductCard from "../components/ProductCard";
 import CartSummary from "../components/CartSummary";
 import { ShoppingCart } from "lucide-react";
 
 export default function Store() {
-  const [cart, setCart] = useState([]);
+  // Initialize cart from localStorage or empty array
+  const [cart, setCart] = useState(() => {
+    if (typeof window !== "undefined") {
+      const savedCart = localStorage.getItem("cart");
+      return savedCart ? JSON.parse(savedCart) : [];
+    }
+    return [];
+  });
+
   const [showMobileCart, setShowMobileCart] = useState(false);
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   const addToCart = (product) => {
     setCart((prevCart) => {
